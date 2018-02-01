@@ -65,7 +65,7 @@ class ethBucket:
 		
 		#If the file is not open for edit, then just download and replace
 		
-		for f in curFileIDs:
+		for f in CurFileIDs:
 			#convert from fileID to fileName, check if this file is open for edit
 			newFileName = ethBucket.config.get('ID to Name',f);
 			curFile = ethBucket.config.get("Files open for edit", newFileName); 		
