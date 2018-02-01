@@ -2,7 +2,7 @@ import subprocess
 
 
 def upload(bucketID, path):
-	p1 = subprocess.Popen(["./storj", "upload-file", bucketID, path], stdout=subprocess.PIPE)
+	p1 = subprocess.Popen(["Storj", "upload-file", bucketID, path], stdout=subprocess.PIPE)
 	output = p1.communicate()[0]
 	print output
 	fileInfo = output.split(":")

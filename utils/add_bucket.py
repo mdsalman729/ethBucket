@@ -3,7 +3,7 @@ import sys
 
 
 def addBucket(bucketName):
-	p2 = subprocess.Popen(["./storj", "add-bucket", bucketName], stdout=subprocess.PIPE)
+	p2 = subprocess.Popen(["Storj", "add-bucket", bucketName], stdout=subprocess.PIPE)
 	output = p2.communicate()[0]
 	print output
 	bucketInfo = output.split(":")
