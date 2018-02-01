@@ -25,6 +25,8 @@ class utils:
 		p1 = subprocess.Popen(["diff", "-u", file1, file2], stdout=f)
 		output = p1.communicate()[0]
 		p2 = subprocess.Popen(["patch", file1, file3])
+		output = p2.communicate()[0]
+		
 
 	def all_perms(self,path):
 		p1 = subprocess.Popen(["chmod", "777", path], stdout=subprocess.PIPE)
