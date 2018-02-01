@@ -1,0 +1,18 @@
+contract UserInfo {
+        uint256[] public fileIdArr;
+        address[] public userNameArr;
+        address user1;
+ //BucketId to userAddress
+ //UserAddress to fileID
+    mapping (uint256 => mapping (address => uint256[])) BucketIdtoAddress;
+ 
+    function addUserChangesToBucket(address user, uint256 bucketId, uint256 fileId) public {
+            BucketIdtoAddress[bucketId][user].push(fileId);
+            user1 = user;
+    }
+    function getUserChangesFromBucket(uint256 bucketId, address user) public {
+        fileIdArr = BucketIdtoAddress[bucketId][user];
+        user1 = user;
+    }
+    
+}
