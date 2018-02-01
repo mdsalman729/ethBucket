@@ -52,7 +52,7 @@ class ethBucket:
 	#Input: bucketName, curPath
 	def pull(self):
 		#Get the list of files that are present in the active workspace
-		CurFileIDs = ['8a1dbeb1730222cb2d96315c']
+		CurFileIDs = ['ed8eea00d8fbbd93d7d7c8c1']
 		ethBucket.bucketName = sys.argv[2]
 		ethBucket.filePath = sys.argv[3]
 		#Get the bucket ID from init file
@@ -69,8 +69,9 @@ class ethBucket:
 				utils().download(ethBucket.bucketID, f, ethBucket.filePath + "/" + newFileName)
 			else:
 				utils().download(ethBucket.bucketID, f, ethBucket.filePath + "/" + 'tempEthBucketFile')
-				utils().merge(ethBucket.filePath + "/" + newFileName, ethBucket.filePath + "/" + 'tempEthBucketFile')
+				utils().merge(ethBucket.filePath + "/" + newFileName, ethBucket.filePath + "/" + 'tempEthBucketFile', ethBucket.filePath + "/" + 'tempPatchFile')
 				os.remove(ethBucket.filePath + "/" + 'tempEthBucketFile')
+				os.remove(ethBucket.filePath + "/" + 'tempPatchFile')
 
 	
 	#Input: bucketName, filePath

@@ -1,5 +1,6 @@
 import subprocess
 import sys
+import os
 
 class utils:
 	def addBucket(self,bucketName):
@@ -18,11 +19,12 @@ class utils:
 		print output
 		self.read_perms(path)
 
-	def merge(self,file1, file2):
-		f = open(file2, "w")
-		path, fileName = os.path.split(file2)	
+	def merge(self,file1, file2, file3):
+		path, fileName = os.path.split(file3)	
+		f = open(file3, "w")
 		p1 = subprocess.Popen(["diff", "-u", file1, file2], stdout=f)
-		p2 = subprocess.Popen(["patch", file1, fileName])
+		output = p1.communicate()[0]
+		p2 = subprocess.Popen(["patch", file1, file3])
 
 	def all_perms(self,path):
 		p1 = subprocess.Popen(["chmod", "777", path], stdout=subprocess.PIPE)
