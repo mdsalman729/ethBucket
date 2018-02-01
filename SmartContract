@@ -1,0 +1,40 @@
+pragma solidity ^0.4.0;
+contract fileInfo {
+    uint256[] public fileIdArr;
+    string[] public fileNameArr;
+ 
+ //BucketId to fileID 
+    mapping (uint256 => uint256[]) curView;
+    mapping (uint256 => string) fileIdToName;
+    function updateCurWorkingBranch(uint256 fileId, uint256 bucketId) public {
+            curView[bucketId].push(fileId);
+    }
+    function addFileName(uint256 fileId, string fileName) public {
+            fileIdToName[fileId] = (fileName);
+    }
+    function getCurWorkingBranch(uint256 bucketId) public returns(uint256[])
+    {
+        fileIdArr = curView[bucketId];
+        return curView[bucketId];
+    }
+    
+} 
+
+contract UserInfo {
+        uint256[] public fileIdArr;
+        address[] public userNameArr;
+        address user1;
+ //BucketId to userAddress
+ //UserAddress to fileID
+    mapping (uint256 => mapping (address => uint256[])) BucketIdtoAddress;
+ 
+    function addUserChangesToBucket(address user, uint256 bucketId, uint256 fileId) public {
+            BucketIdtoAddress[bucketId][user].push(fileId);
+            user1 = user;
+    }
+    function getUserChangesFromBucket(uint256 bucketId, address user) public {
+        fileIdArr = BucketIdtoAddress[bucketId][user];
+        user1 = user;
+    }
+    
+}
