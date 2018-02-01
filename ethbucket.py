@@ -52,7 +52,7 @@ class ethBucket:
 	#Input: bucketName, curPath
 	def pull(self):
 		#Get the list of files that are present in the active workspace
-		CurFileIDs = []
+		CurFileIDs = ['8a1dbeb1730222cb2d96315c']
 		ethBucket.bucketName = sys.argv[2]
 		ethBucket.filePath = sys.argv[3]
 		#Get the bucket ID from init file
@@ -64,14 +64,13 @@ class ethBucket:
 		for f in CurFileIDs:
 			#convert from fileID to fileName, check if this file is open for edit
 			newFileName = ethBucket.config.get('ID to Name',f);
-			curFile = ethBucket.config.get("Files open for edit", newFileName); 		
-			if (curFile != true):
-				os.remove(curPath + "/" + newFileName)
+			if (ethBucket.config.has_option("Files open for edit", newFileName) == False):
+				os.remove(ethBucket.filePath + "/" + newFileName)
 				utils().download(ethBucket.bucketID, f, ethBucket.filePath + "/" + newFileName)
 			else:
-				utils().download(ethBucket.bucketID, f, ethBucket.filePath + "/" + tempEthBucketFile)
-				utils().merge(ethBucket.filePath + "/" + newFileName, ethBucket.filePath + "/" + tempEthBucketFile)
-				os.remove(ethBucket.filePath + "/" + tempEthBucketFile)
+				utils().download(ethBucket.bucketID, f, ethBucket.filePath + "/" + 'tempEthBucketFile')
+				utils().merge(ethBucket.filePath + "/" + newFileName, ethBucket.filePath + "/" + 'tempEthBucketFile')
+				os.remove(ethBucket.filePath + "/" + 'tempEthBucketFile')
 
 	
 	#Input: bucketName, filePath
