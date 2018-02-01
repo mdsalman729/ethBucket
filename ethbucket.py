@@ -15,6 +15,7 @@ import ConfigParser
 import datetime
 import os
 import sys
+from utils.utils import utils
 
 class ethBucket:
 
