@@ -10,16 +10,16 @@
 #log: Get a list of all fileIDs per user in the order of commits from the ledger
 #checkout: Switch to a specific version of the file.  Needs fileId and bucketId
 
-import sys
 import ConfigParser
-import os
-from add_bucket import addBucket
-from upload import upload
-from merge import merge
-from permissions import all_perms
-from download import download
-from shutil import copyfile
 import datetime
+import os
+import sys
+from utils.add_bucket import addBucket
+from utils.download import download
+from shutil import copyfile
+from utils.merge import merge
+from utils.permissions import all_perms
+from utils.upload import upload
 
 class ethBucket:
 
