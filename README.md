@@ -2,8 +2,7 @@
 
 Version control for Files using blockchain
 
-We make use of ethereum smart contract and storj to come up with a very naive way of version control for files.
-
+A crude implementation of version control for files using ethereum smart contracts and STORJ
 PreReqs:
 1. libstorj
 2. python
