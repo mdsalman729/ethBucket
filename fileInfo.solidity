@@ -1,0 +1,21 @@
+pragma solidity ^0.4.0;
+contract fileInfo {
+    uint256[] public fileIdArr;
+    string[] public fileNameArr;
+ 
+ //BucketId to fileID 
+    mapping (uint256 => uint256[]) curView;
+    mapping (uint256 => string) fileIdToName;
+    function updateCurWorkingBranch(uint256 fileId, uint256 bucketId) public {
+            curView[bucketId].push(fileId);
+    }
+    function addFileName(uint256 fileId, string fileName) public {
+            fileIdToName[fileId] = (fileName);
+    }
+    function getCurWorkingBranch(uint256 bucketId) public returns(uint256[])
+    {
+        fileIdArr = curView[bucketId];
+        return curView[bucketId];
+    }
+    
+} 
