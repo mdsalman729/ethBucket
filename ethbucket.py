@@ -10,16 +10,11 @@
 #log: Get a list of all fileIDs per user in the order of commits from the ledger
 #checkout: Switch to a specific version of the file.  Needs fileId and bucketId
 
+from shutil import copyfile
 import ConfigParser
 import datetime
 import os
 import sys
-from utils.add_bucket import addBucket
-from utils.download import download
-from shutil import copyfile
-from utils.merge import merge
-from utils.permissions import all_perms
-from utils.upload import upload
 
 class ethBucket:
 
@@ -39,14 +34,14 @@ class ethBucket:
 		bucketID = sys.argv[2]
 		fileID = sys.argv[3]
 		ethBucket.filePath = sys.argv[4]
-		download(bucketID, fileID, ethBucket.filePath)
+		utils().download(bucketID, fileID, ethBucket.filePath)
 		
 
 	#Input: filePath
 	def edit(self): 
 		self.initParser()
 		ethBucket.filePath = sys.argv[2]
-		all_perms(ethBucket.filePath)
+		utils().all_perms(ethBucket.filePath)
 		path, file = os.path.split(ethBucket.filePath)	
 		ethBucket.config.set("Files open for edit", file, "true"); 		
 		with open('ethBucket.cfg', 'wb') as configfile:
@@ -71,10 +66,10 @@ class ethBucket:
 			curFile = ethBucket.config.get("Files open for edit", newFileName); 		
 			if (curFile != true):
 				os.remove(curPath + "/" + newFileName)
-				download(ethBucket.bucketID, f, ethBucket.filePath + "/" + newFileName)
+				utils().download(ethBucket.bucketID, f, ethBucket.filePath + "/" + newFileName)
 			else:
-				download(ethBucket.bucketID, f, ethBucket.filePath + "/" + tempEthBucketFile)
-				merge(ethBucket.filePath + "/" + newFileName, ethBucket.filePath + "/" + tempEthBucketFile)
+				utils().download(ethBucket.bucketID, f, ethBucket.filePath + "/" + tempEthBucketFile)
+				utils().merge(ethBucket.filePath + "/" + newFileName, ethBucket.filePath + "/" + tempEthBucketFile)
 				os.remove(ethBucket.filePath + "/" + tempEthBucketFile)
 
 	
@@ -91,7 +86,7 @@ class ethBucket:
 		dst = path + "/" + file + "." + datetime.datetime.now().strftime('%Y_%m_%d_%H_%M_%S_%f')
 		copyfile(ethBucket.filePath,dst)
 		#Upload file to STORJ and delete temporary file
-		fileID = upload(ethBucket.bucketID, dst)
+		fileID = utils().upload(ethBucket.bucketID, dst)
 		os.remove(dst)
 		#TODO:Update curView(modify) and userView(appendToList) in the ledger with fileID
 		ethBucket.config.set('ID to Name', fileID, file)
@@ -105,7 +100,7 @@ class ethBucket:
 		self.initParser()
 		ethBucket.config.add_section('Bucket')
 		ethBucket.bucketName = sys.argv[2]
-		ethBucket.bucketID = addBucket(ethBucket.bucketName)	
+		ethBucket.bucketID = utils().addBucket(ethBucket.bucketName)	
 		ethBucket.config.set('Bucket', ethBucket.bucketName, ethBucket.bucketID)
 		ethBucket.config.add_section(ethBucket.bucketName)
 		ethBucket.config.add_section("ID to Name")
@@ -122,8 +117,6 @@ class ethBucket:
 			ethBucket().init()
 		elif (funcName == 'pull'):
 			ethBucket().pull()
-		elif (funcName == 'merge'):
-			ethBucket().merge()
 		elif (funcName == 'edit'):
 			ethBucket().edit()
 		elif (funcName == 'log'):
