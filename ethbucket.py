@@ -29,6 +29,11 @@ class ethBucket:
 	config = None
 	curFileIDtoName = {}
 	
+	#Initialize ConfigParser
+	def initParser(self):
+		ethBucket.config = ConfigParser.RawConfigParser()
+		ethBucket.config.read('ethBucket.cfg')
+		
 	#Input: bucketID, fileID, filePath
 	def checkout(self):
 		bucketID = sys.argv[2]
@@ -39,8 +44,7 @@ class ethBucket:
 
 	#Input: filePath
 	def edit(self): 
-		ethBucket.config = ConfigParser.RawConfigParser()
-		ethBucket.config.read('ethBucket.cfg')
+		self.initParser()
 		ethBucket.filePath = sys.argv[2]
 		all_perms(ethBucket.filePath)
 		path, file = os.path.split(ethBucket.filePath)	
@@ -56,8 +60,7 @@ class ethBucket:
 		ethBucket.bucketName = sys.argv[2]
 		ethBucket.filePath = sys.argv[3]
 		#Get the bucket ID from init file
-		ethBucket.config = ConfigParser.RawConfigParser()
-		ethBucket.config.read('ethBucket.cfg')
+		self.initParser()
 		ethBucket.bucketID = ethBucket.config.get('Bucket', ethBucket.bucketName); 		
 		
 		#If the file is not open for edit, then just download and replace
@@ -69,7 +72,7 @@ class ethBucket:
 			if (curFile != true):
 				os.remove(curPath + "/" + newFileName)
 				download(ethBucket.bucketID, f, ethBucket.filePath + "/" + newFileName)
-			#else:
+			else:
 				download(ethBucket.bucketID, f, ethBucket.filePath + "/" + tempEthBucketFile)
 				merge(ethBucket.filePath + "/" + newFileName, ethBucket.filePath + "/" + tempEthBucketFile)
 				os.remove(ethBucket.filePath + "/" + tempEthBucketFile)
@@ -77,8 +80,7 @@ class ethBucket:
 	
 	#Input: bucketName, filePath
 	def push(self):
-		ethBucket.config = ConfigParser.RawConfigParser()
-		ethBucket.config.read('ethBucket.cfg')
+		self.initParser()
 		#Get the file path from the user
 		ethBucket.bucketName = sys.argv[2]
 		ethBucket.filePath = sys.argv[3]
@@ -104,7 +106,7 @@ class ethBucket:
 
 	#Input : bucketName.  This can be changed to get the current working directory later.
 	def init(self):
-		ethBucket.config = ConfigParser.RawConfigParser()
+		self.initParser()
 		ethBucket.config.add_section('Bucket')
 		ethBucket.bucketName = sys.argv[2]
 		ethBucket.bucketID = addBucket(ethBucket.bucketName)	
