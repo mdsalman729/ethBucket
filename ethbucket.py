@@ -28,7 +28,7 @@ class ethBucket:
 	#Initialize ConfigParser
 	def initParser(self):
 		ethBucket.config = ConfigParser.RawConfigParser()
-		ethBucket.config.read('ethBucket.cfg')
+		ethBucket.config.read('utils/ethBucket.cfg')
 		
 	#Input: bucketID, fileID, filePath
 	def checkout(self):
@@ -45,7 +45,7 @@ class ethBucket:
 		utils().all_perms(ethBucket.filePath)
 		path, file = os.path.split(ethBucket.filePath)	
 		ethBucket.config.set("Files open for edit", file, "true"); 		
-		with open('ethBucket.cfg', 'wb') as configfile:
+		with open('utils/ethBucket.cfg', 'wb') as configfile:
     			ethBucket.config.write(configfile)
 
 
@@ -91,7 +91,7 @@ class ethBucket:
 		os.remove(dst)
 		#TODO:Update curView(modify) and userView(appendToList) in the ledger with fileID
 		ethBucket.config.set('ID to Name', fileID, file)
-		with open('ethBucket.cfg', 'wb') as configfile:
+		with open('utils/ethBucket.cfg', 'wb') as configfile:
     			ethBucket.config.write(configfile)
 			
 		
@@ -107,7 +107,7 @@ class ethBucket:
 		ethBucket.config.add_section("ID to Name")
 		ethBucket.config.add_section("Files open for edit")
 		
-		with open('ethBucket.cfg', 'wb') as configfile:
+		with open('utils/ethBucket.cfg', 'wb') as configfile:
     			ethBucket.config.write(configfile)
 
 
