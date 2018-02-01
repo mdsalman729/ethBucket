@@ -88,17 +88,13 @@ class ethBucket:
 		ethBucket.bucketID = ethBucket.config.get('Bucket', ethBucket.bucketName); 		
 		#Append timeStamp to the fileName
 		path, file = os.path.split(ethBucket.filePath)	
-		temp = file
-		timestamp = datetime.datetime.now()
-		timestampStr = timestamp.strftime('%Y_%m_%d_%H_%M_%S_%f')
-		file = file + "." + timestampStr
-		dst = path + "/" + file
+		dst = path + "/" + file + "." + datetime.datetime.now().strftime('%Y_%m_%d_%H_%M_%S_%f')
 		copyfile(ethBucket.filePath,dst)
 		#Upload file to STORJ and delete temporary file
 		fileID = upload(ethBucket.bucketID, dst)
 		os.remove(dst)
 		#TODO:Update curView(modify) and userView(appendToList) in the ledger with fileID
-		ethBucket.config.set('ID to Name', fileID, temp)
+		ethBucket.config.set('ID to Name', fileID, file)
 		with open('ethBucket.cfg', 'wb') as configfile:
     			ethBucket.config.write(configfile)
 			
